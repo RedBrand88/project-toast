@@ -43,11 +43,12 @@ const getStyles = (variant) => {
 }
 
 function Toast({ message, variant, close }) {
+    const Icon = ICONS_BY_VARIANT[variant];
 
     return (
         <div className={`${styles.toast} ${getStyles(variant)}`}>
             <div className={styles.iconContainer}>
-                <ToastIcon variant={variant} />
+                <Icon />
             </div>
             <p className={styles.content}>
                 {message}
