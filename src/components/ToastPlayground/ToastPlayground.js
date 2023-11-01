@@ -12,11 +12,12 @@ const VARIANT_OPTIONS = [
     { id: 4, variant: 'error' }];
 
 function ToastPlayground() {
-    const [toastVariant, setToastVariant] = useState('');
+    const [toastVariant, setToastVariant] = useState('notice');
     const [toastMessage, setToastMessage] = useState('');
     const [toastArray, setToastArray] = useState([]);
 
-    const onPopToast = () => {
+    const onPopToast = (e) => {
+        e.preventDefault();
         const nextToast = [
             ...toastArray,
             {
@@ -26,6 +27,8 @@ function ToastPlayground() {
             }
         ];
         setToastArray(nextToast);
+        setToastMessage('');
+        setToastVariant('notice');
     }
 
     const handleDismiss = (id) => {
@@ -48,7 +51,10 @@ function ToastPlayground() {
                 handleDismiss={handleDismiss}
             />
 
-            <div className={styles.controlsWrapper}>
+            <form
+                className={styles.controlsWrapper}
+                onSubmit={onPopToast}
+            >
                 <div className={styles.row}>
                     <label
                         htmlFor="message"
@@ -94,11 +100,10 @@ function ToastPlayground() {
                     <div
                         className={`${styles.inputWrapper} ${styles.radioWrapper}`}
                     >
-                        <Button
-                            onClick={onPopToast}>Pop Toast!</Button>
+                        <Button>Pop Toast!</Button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }
