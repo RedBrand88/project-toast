@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Button from '../Button';
 
 import styles from './ToastPlayground.module.css';
-import Toast from '../Toast/Toast';
+import ToastShelf from '../ToastShelf/ToastShelf';
 
 const VARIANT_OPTIONS = [
     { id: 1, variant: 'notice' },
@@ -14,7 +14,26 @@ const VARIANT_OPTIONS = [
 function ToastPlayground() {
     const [toastVariant, setToastVariant] = useState('');
     const [toastMessage, setToastMessage] = useState('');
-    const [showToast, setShowToast] = useState(false);
+    const [toastArray, setToastArray] = useState([]);
+
+    const onPopToast = () => {
+        const nextToast = [
+            ...toastArray,
+            {
+                id: crypto.randomUUID(),
+                toastVariant,
+                toastMessage,
+            }
+        ];
+        setToastArray(nextToast);
+    }
+
+    const handleDismiss = (id) => {
+        const nextToastArray = toastArray.filter(toast => {
+            return toast.id !== id
+        });
+        setToastArray(nextToastArray);
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -23,14 +42,11 @@ function ToastPlayground() {
                 <h1>Toast Playground</h1>
             </header>
 
-            {showToast &&
 
-                <Toast
-                    message={toastMessage}
-                    variant={toastVariant}
-                    close={setShowToast}
-                />
-            }
+            <ToastShelf
+                toastArray={toastArray}
+                handleDismiss={handleDismiss}
+            />
 
             <div className={styles.controlsWrapper}>
                 <div className={styles.row}>
@@ -78,7 +94,8 @@ function ToastPlayground() {
                     <div
                         className={`${styles.inputWrapper} ${styles.radioWrapper}`}
                     >
-                        <Button onClick={setShowToast}>Pop Toast!</Button>
+                        <Button
+                            onClick={onPopToast}>Pop Toast!</Button>
                     </div>
                 </div>
             </div>
