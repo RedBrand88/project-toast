@@ -26,6 +26,10 @@ function ToastProvider({ children }) {
         setToastArray(nextToastArray);
     }
 
+    const dismissAll = () => {
+        setToastArray([]);
+    }
+
     return (
         <ToastContext.Provider value={
             {
@@ -36,6 +40,7 @@ function ToastProvider({ children }) {
                 toastArray,
                 toastMessage,
                 toastVariant,
+                dismissAll
             }
         }>
             {children}

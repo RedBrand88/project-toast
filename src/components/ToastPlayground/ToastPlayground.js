@@ -16,10 +16,8 @@ const VARIANT_OPTIONS = [
 function ToastPlayground() {
     const {
         createToast,
-        handleDismiss,
         setToastVariant,
         setToastMessage,
-        toastArray,
         toastMessage,
         toastVariant,
     } = useContext(ToastContext);
@@ -39,10 +37,7 @@ function ToastPlayground() {
             </header>
 
 
-            <ToastShelf
-                toastArray={toastArray}
-                handleDismiss={handleDismiss}
-            />
+            <ToastShelf />
 
             <form
                 className={styles.controlsWrapper}
